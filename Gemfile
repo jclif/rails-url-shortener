@@ -37,5 +37,5 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-
+gem 'launchy'
 gem 'pry-rails'

@@ -1,1 +1,64 @@
-#!/usr/bin/env ruby
+require 'mail'
+def valid_email?(value)
+  return false if value == ''
+  parsed = Mail::Address.new(value)
+
+  return parsed.address == value && parsed.local != parsed.address
+
+rescue Mail::Field::ParseError
+  return false
+end
+
+def create_short_url
+  users = User.all
+end
+
+def get_current_users(email_input)
+  result = User.all.select { |el| el.email == email_input }
+  unless result[0].nil?
+    result[0]
+  else
+    #create
+    u = User.new
+    u.email = email_input
+    u.save!
+   # get_current_users(email_input)
+    u
+  end
+
+end
+
+
+begin
+  puts "Input your email:"
+  email_input = gets.chomp
+end until valid_email?(email_input)
+
+current_user = get_current_users(email_input)
+
+begin
+  puts "What do you want to do?"
+  puts "0. Create shortened URL"
+  puts "1. Visit shortened URL"
+  decision_input = gets.chomp
+end until decision_input.to_i.between?(0,1)
+
+case decision_input.to_i
+when 0
+  puts "Type in your long url"
+  input2 = gets.chomp
+
+  ShortenedUrl.create_for_user_and_long_url!(current_user, input2)
+  ShortenedUrl.order("created_at").last
+
+  puts ShortenedUrl.get_short_url(current_user.id, input2)
+
+when 1
+  puts "Type in shortened url"
+  input2 = gets.chomp
+  p input2
+  Launchy.open(ShortenedUrl.get_long_url(input2))
+end
+
+
+

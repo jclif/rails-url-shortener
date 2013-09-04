@@ -26,6 +26,14 @@ class ShortenedUrl < ActiveRecord::Base
     s.save!
   end
 
+  def self.get_long_url(short_url)
+    self.where("short_url = ?", short_url)[0].long_url
+  end
+
+  def self.get_short_url(submitter_id, long_url)
+    self.where("long_url = ?", long_url).where("submitter_id = ?", submitter_id)[0].short_url
+  end
+
   def num_clicks
     Visit.count(:conditions => ["short_url_id = ?", self.id])
   end
