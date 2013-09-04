@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904160303) do
+ActiveRecord::Schema.define(:version => 20130904171851) do
 
   create_table "shortened_urls", :force => true do |t|
     t.integer  "submitter_id"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(:version => 20130904160303) do
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "visits", :force => true do |t|
+    t.integer  "submitter_id"
+    t.integer  "short_url_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end

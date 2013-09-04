@@ -7,4 +7,10 @@ class User < ActiveRecord::Base
   :primary_key => :id
   )
 
+  has_many(
+  :visits,
+  :class_name => "Visit",
+  :primary_key => :id
+  )
+
 end
